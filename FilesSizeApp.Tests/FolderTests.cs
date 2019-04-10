@@ -2,6 +2,7 @@
 using Xunit;
 using FilesSizeApp.Models;
 using System.IO;
+using System.Linq;
 
 namespace FilesSizeApp.Tests
 {
@@ -28,6 +29,7 @@ namespace FilesSizeApp.Tests
         {            
             Assert.Throws<ArgumentNullException>(() => new FolderDetails(""));
         }
+        [Fact]
         public void FilesInFolderTest()
         {
             MakeTempFolder();
@@ -36,10 +38,7 @@ namespace FilesSizeApp.Tests
             MakeTempFolder();
             FolderDetails testFolder = new FolderDetails(Path.GetTempPath());
             DirectoryInfo expectedDirectory = new DirectoryInfo(Path.GetTempPath());
-            foreach(var file in testFolder.Files)
-            {
-                //Assert.Equal(expectedDirectory. testFolder.Files.)
-            }
+            Assert.Equal(expectedDirectory.GetFiles().Select(file => file.FullName), testFolder.Files.Select(file => file.Path));
         }
     }
 }
