@@ -6,16 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace FilesSizeApp.Models
 {
+    [Serializable]
+
     public class FileDetails : IFile
     {
         private FileInfo _fileInfo;
-        public string Path { get; set; }
-        public Task<long> Size
+        public string Path { get; set; }        
+        public long Size { get => _fileInfo.Length; set { } } 
+        public FileDetails()
         {
-            get => TakeSize();
 
         }
         public FileDetails(string path)
@@ -29,7 +32,6 @@ namespace FilesSizeApp.Models
             {
                 throw new ArgumentNullException(nameof(path));
             }
-
         }
 
         public async Task<long> TakeSize()

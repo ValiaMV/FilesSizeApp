@@ -1,10 +1,8 @@
 ﻿using FilesSizeApp.Models;
 using FilesSizeApp.Services;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,18 +22,18 @@ namespace FilesSizeApp.Tests
                 sw.WriteLine("Temp test file");
             }
         }
-        
+
         [Fact]
         public void CreationTest()
         {
-            SizeService service = new SizeService(new FolderDetails(_tempFolderPath));
+            SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
             Assert.NotNull(service);
         }
         [Fact]
         public async Task FileSizeCreationTest()
         {
             MakeTempFile();
-            SizeService service = new SizeService(new FolderDetails(_tempFolderPath));
+            SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
             var size = await service.FileSize(_tempFilePath);
             Assert.True(size != 0);
         }
@@ -43,37 +41,25 @@ namespace FilesSizeApp.Tests
         public async Task FileSizeAccuracyTest()
         {
             MakeTempFile();
-            SizeService service = new SizeService(new FolderDetails(_tempFolderPath));
+            SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
             var size = await service.FileSize(_tempFilePath);
             FileInfo file = new FileInfo(_tempFilePath);
 
             Assert.Equal(file.Length, size);
         }
-        private void printToString(long number)
+        private async Task printToString(Task<long> number, string path)
         {
-            _printedData += number.ToString() + " ";
+            _printedData += await number + " ";
         }
         [Fact]
         public async Task FileSizePrintAccuracyTest()
         {
             _printedData = string.Empty;
             MakeTempFile();
-            SizeService service = new SizeService(new FolderDetails(_tempFolderPath));
+            SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
             await service.FileSizePrint(printToString, _tempFilePath);
             FileInfo file = new FileInfo(_tempFilePath);
             Assert.Equal(file.Length.ToString(), _printedData.Trim());
-        }
-        [Fact]
-        public async Task FolderSizesPrintAccuracyTest()
-        {
-            _printedData = string.Empty;
-            MakeTempFile();
-            SizeService service = new SizeService(new FolderDetails(_tempFolderPath));
-            await service.FolderSizesPrint(printToString);
-            DirectoryInfo expected = new DirectoryInfo(_tempFolderPath);
-            
-            Assert.Equal(String.Join(" ", expected.GetFiles().Select(file => file.Length).ToArray()), _printedData.Trim());
-
         }
     }
 }

@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilesSizeApp.Interfaces
+namespace FilesSizeApp.Services
 {
-    public interface IFile
+    class XmlService
     {
-        string Path { get; set; }
-        long Size { get; set; }
     }
 }

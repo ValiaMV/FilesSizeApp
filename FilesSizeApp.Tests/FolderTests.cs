@@ -31,19 +31,14 @@ namespace FilesSizeApp.Tests
         [Fact]
         public void CreationTest()
         {
-            FolderDetails testFolder = new FolderDetails(_tempFolderPath);
+            FolderDetails testFolder = new FolderDetails { Path = _tempFolderPath };
             Assert.NotNull(testFolder);
-        }
-        [Fact]
-        public void EmptyArgumentCreationTest()
-        {            
-            Assert.Throws<ArgumentNullException>(() => new FolderDetails(""));
         }
         [Theory, AutoData]
         public void FilesInFolderTest(int filesCount)
         {
             MakeTempFolder(filesCount);
-            FolderDetails testFolder = new FolderDetails(_tempFolderPath);
+            FolderDetails testFolder = new FolderDetails { Path = _tempFolderPath }; ;
             DirectoryInfo expectedDirectory = new DirectoryInfo(_tempFolderPath);
             Assert.Equal(expectedDirectory.GetFiles().Select(file => file.FullName), testFolder.Files.Select(file => file.Path));
         }

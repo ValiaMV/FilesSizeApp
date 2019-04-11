@@ -30,7 +30,6 @@ namespace FilesSizeApp.Models
         }
 
         public IEnumerable<IFile> Files { get; private set; }
-
         public FolderDetails()
         {
 
