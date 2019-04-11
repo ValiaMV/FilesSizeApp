@@ -29,35 +29,17 @@ namespace FilesSizeApp.Tests
             SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
             Assert.NotNull(service);
         }
-        [Fact]
-        public async Task FileSizeCreationTest()
+        private void printToString(string size, string path)
         {
-            MakeTempFile();
-            SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
-            var size = await service.FileSize(_tempFilePath);
-            Assert.True(size != 0);
+            _printedData += size + " ";
         }
         [Fact]
-        public async Task FileSizeAccuracyTest()
-        {
-            MakeTempFile();
-            SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
-            var size = await service.FileSize(_tempFilePath);
-            FileInfo file = new FileInfo(_tempFilePath);
-
-            Assert.Equal(file.Length, size);
-        }
-        private async Task printToString(Task<long> number, string path)
-        {
-            _printedData += await number + " ";
-        }
-        [Fact]
-        public async Task FileSizePrintAccuracyTest()
+        public void FileSizePrintAccuracyTest()
         {
             _printedData = string.Empty;
             MakeTempFile();
             SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
-            await service.FileSizePrint(printToString, _tempFilePath);
+            service.FileSizePrint(printToString, _tempFilePath);
             FileInfo file = new FileInfo(_tempFilePath);
             Assert.Equal(file.Length.ToString(), _printedData.Trim());
         }

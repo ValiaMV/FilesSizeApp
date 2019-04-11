@@ -27,11 +27,9 @@ namespace FilesSizeApp.Services
         }
         public void FolderSizesPrint(Action<string, string> printMethod)
         {
-            Parallel.ForEach(_folder.Files, () => { }, (currentFile) =>
+            Parallel.ForEach(_folder.Files, (currentFile) =>
             {
                 FileSizePrint(printMethod, currentFile.Path);
-            }, (res) => {
-
             });
         }
         public void MakeXml()

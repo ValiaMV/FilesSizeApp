@@ -11,6 +11,7 @@ namespace FilesSizeApp.Models
     public class FolderDetails : IFolder
     {
         private DirectoryInfo _folderInfo;
+        public IEnumerable<IFile> Files { get; private set; }
         private string _path;
         public string Path {
             get { return _path; }
@@ -20,7 +21,7 @@ namespace FilesSizeApp.Models
                 {
                     _path = value;
                     _folderInfo = new DirectoryInfo(_path);
-                    Files = _folderInfo.GetFiles().Select(file => new FileDetails(file.FullName));
+                    Files = Directory.GetFiles(_folderInfo.FullName, "*.*", SearchOption.AllDirectories).Select(path => new FileDetails(path));
                 }
                 else
                 {
@@ -28,8 +29,6 @@ namespace FilesSizeApp.Models
                 }
             }
         }
-
-        public IEnumerable<IFile> Files { get; private set; }
         public FolderDetails()
         {
 

@@ -9,7 +9,7 @@ namespace FileSizeConsoleApp
     {
         static void Main(string[] args)
         {
-            var files = Directory.GetFiles(@"C:\Users\mager43\Downloads");
+            var files = Directory.GetFiles(@"C:\Users\Tom\Downloads\English");
 
             Parallel.ForEach(files, (currentFile) =>
             {

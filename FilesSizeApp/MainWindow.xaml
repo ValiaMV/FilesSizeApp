@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FilesSizeApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="417" Width="483">
-    <Grid>
-        <Label Content="" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="27" Width="455"
+        Title="MainWindow" Height="417" Width="543.801">
+    <Grid Margin="0,0,0,0">
+        <Label Content="" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="27" Width="455"
                Name="FolderPath"/>
-        <Button Content="Choose folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="455"
+        <Button Content="Choose folder" Margin="10,38,10,0" VerticalAlignment="Top"
                 Click="ChooseFolder"/>
-        <TextBox HorizontalAlignment="Left" Height="309" Margin="10,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="455"
+        <TextBox Margin="10,62,10,16" TextWrapping="Wrap" Text=""
+                 VerticalScrollBarVisibility="Visible"
                  Name="SizesTextBox"/>
     </Grid>
 </Window>

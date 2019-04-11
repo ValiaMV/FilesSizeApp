@@ -27,7 +27,7 @@ namespace FilesSizeApp
     public partial class MainWindow : Window
     {
         private SizeService _sizeService;
-        private string _viewData;
+        private List<string> _viewData;
         private object obj = new object();
         public MainWindow(SizeService service)
         {
@@ -41,16 +41,21 @@ namespace FilesSizeApp
             var dialogResult = dialog.ShowDialog();
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
             {
+                _viewData = new List<string>();
                 SizesTextBox.Text = "";
+                FolderPath.Content = dialog.SelectedPath;
                 _sizeService.SetFolder(dialog.SelectedPath);
                 ViewData();
+                SizesTextBox.AppendText(string.Join("", _viewData.ToArray()));
                 _sizeService.MakeXml();
             }
         }
         private void ViewOnTextBox(string size, string path)
         {
-            _viewData = path + " " + size + " byte\n";
-            SizesTextBox.AppendText(_viewData);
+            lock(obj)
+            {
+                _viewData.Add(path + " " + size + " byte\n");
+            }
         }
         private void ViewData()
         {
