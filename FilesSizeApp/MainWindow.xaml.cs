@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using System.IO;
 using FilesSizeApp.Models;
 using System.Xml.Serialization;
+using System.Threading;
 
 namespace FilesSizeApp
 {
@@ -27,33 +28,33 @@ namespace FilesSizeApp
     {
         private SizeService _sizeService;
         private string _viewData;
-        private string _directoryPath;
+        private object obj = new object();
         public MainWindow(SizeService service)
         {
             _sizeService = service;
             InitializeComponent();
         }
 
-        private async void ChooseFolder(object sender, RoutedEventArgs e)
+        private void ChooseFolder(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             var dialogResult = dialog.ShowDialog();
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
             {
                 SizesTextBox.Text = "";
-                _directoryPath = dialog.SelectedPath;
                 _sizeService.SetFolder(dialog.SelectedPath);
-                await ViewDataAsync();
+                ViewData();
                 _sizeService.MakeXml();
             }
         }
-        private async Task ViewOnTextBox(Task<long> number)
+        private void ViewOnTextBox(string size, string path)
         {
-            SizesTextBox.Text += await number + "\n";
+            _viewData = path + " " + size + " byte\n";
+            SizesTextBox.AppendText(_viewData);
         }
-        private async Task ViewDataAsync()
+        private void ViewData()
         {
-            await _sizeService.FolderSizesPrint(ViewOnTextBox);
+            _sizeService.FolderSizesPrint(ViewOnTextBox);
         }
     }
 }

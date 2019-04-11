@@ -21,20 +21,18 @@ namespace FilesSizeApp.Services
         {
             _folder.Path = path;
         }
-        public long FileSize(string path)
+        public void FileSizePrint(Action<string, string> printMethod, string path)
         {
-            return _folder.Files.Single(file => file.Path == path).Size;
+            printMethod.Invoke(_folder.Files.Single( file => file.Path == path).Size.ToString(), path);
         }
-        public async Task FileSizePrint(Func<Task<long>, Task> printMethod, string path)
+        public void FolderSizesPrint(Action<string, string> printMethod)
         {
-            await printMethod(Task.FromResult(FileSize(path)));
-        }
-        public async Task FolderSizesPrint(Func<Task<long>, Task> printMethod)
-        {
-            foreach(var file in _folder.Files)
+            Parallel.ForEach(_folder.Files, () => { }, (currentFile) =>
             {
-                await FileSizePrint(printMethod, file.Path);
-            }
+                FileSizePrint(printMethod, currentFile.Path);
+            }, (res) => {
+
+            });
         }
         public void MakeXml()
         {
