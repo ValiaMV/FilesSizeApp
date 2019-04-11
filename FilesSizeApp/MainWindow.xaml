@@ -7,8 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="417" Width="483">
     <Grid>
-        <Label Content="" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="27" Width="455"/>
-        <Button Content="Choose folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="455"/>
-        <TreeView HorizontalAlignment="Left" Height="309" Margin="10,67,0,0" VerticalAlignment="Top" Width="455"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="27" Width="455"
+               Name="FolderPath"/>
+        <Button Content="Choose folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="455"
+                Click="ChooseFolder"/>
+        <TextBox HorizontalAlignment="Left" Height="309" Margin="10,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="455"
+                 Name="SizesTextBox"/>
     </Grid>
 </Window>

@@ -36,22 +36,5 @@ namespace FilesSizeApp.Tests
         {
             Assert.Throws<ArgumentNullException>(() => new FileDetails(null));
         }
-        [Fact]
-        public void TakeSizeExistanceTest()
-        {
-            string testFilePath = MakeTempFile();
-            FileDetails testFile = new FileDetails(testFilePath);
-            Assert.NotNull(testFile.TakeSize());
-        }
-        [Fact]
-        public async void TakeSizeEqualsTest()
-        {
-            string testFilePath = MakeTempFile();
-            FileDetails testFile = new FileDetails(testFilePath);
-            long expectedSize = new FileInfo(testFilePath).Length;
-            long actualSize = await testFile.TakeSize();
-
-            Assert.Equal(expectedSize, actualSize);
-        }
     }
 }

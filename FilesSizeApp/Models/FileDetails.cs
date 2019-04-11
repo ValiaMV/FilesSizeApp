@@ -12,8 +12,11 @@ namespace FilesSizeApp.Models
     {
         private FileInfo _fileInfo;
         public string Path { get; set; }
-        public long Size { get; set; }
+        public Task<long> Size
+        {
+            get => TakeSize();
 
+        }
         public FileDetails(string path)
         {
             if(path != string.Empty)

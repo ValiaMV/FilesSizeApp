@@ -3,15 +3,25 @@ using Xunit;
 using FilesSizeApp.Models;
 using System.IO;
 using System.Linq;
+using AutoFixture.Xunit2;
+using System.Threading.Tasks;
 
 namespace FilesSizeApp.Tests
 {
     public class FolderTests
     {
-        private void MakeTempFolder()
+        private string _tempFolderPath = Path.GetTempPath();
+        private string _tempFilePath = Path.GetTempFileName();
+        private void MakeTempFolder(int count)
         {
-            string path = Path.GetTempFileName();
-            FileInfo file = new FileInfo(path);
+            for(int i = 0; i < count; i++)
+            {
+                MakeTempFile();
+            }
+        }
+        private void MakeTempFile()
+        {
+            FileInfo file = new FileInfo(_tempFilePath);
 
             using (StreamWriter sw = file.CreateText())
             {
@@ -21,7 +31,7 @@ namespace FilesSizeApp.Tests
         [Fact]
         public void CreationTest()
         {
-            FolderDetails testFolder = new FolderDetails(Path.GetTempPath());
+            FolderDetails testFolder = new FolderDetails(_tempFolderPath);
             Assert.NotNull(testFolder);
         }
         [Fact]
@@ -29,15 +39,12 @@ namespace FilesSizeApp.Tests
         {            
             Assert.Throws<ArgumentNullException>(() => new FolderDetails(""));
         }
-        [Fact]
-        public void FilesInFolderTest()
+        [Theory, AutoData]
+        public void FilesInFolderTest(int filesCount)
         {
-            MakeTempFolder();
-            MakeTempFolder();
-            MakeTempFolder();
-            MakeTempFolder();
-            FolderDetails testFolder = new FolderDetails(Path.GetTempPath());
-            DirectoryInfo expectedDirectory = new DirectoryInfo(Path.GetTempPath());
+            MakeTempFolder(filesCount);
+            FolderDetails testFolder = new FolderDetails(_tempFolderPath);
+            DirectoryInfo expectedDirectory = new DirectoryInfo(_tempFolderPath);
             Assert.Equal(expectedDirectory.GetFiles().Select(file => file.FullName), testFolder.Files.Select(file => file.Path));
         }
     }

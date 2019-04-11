@@ -11,25 +11,29 @@ namespace FilesSizeApp.Models
     public class FolderDetails : IFolder
     {
         private DirectoryInfo _folderInfo;
-        public string Path { get; set; }
-
-        public IEnumerable<IFile> Files { get; }
-
-        public FolderDetails(string path)
-        {
-            if (path != string.Empty)
+        private string _path;
+        public string Path {
+            get { return _path; }
+            set
             {
-                Path = path;
-                _folderInfo = new DirectoryInfo(Path);
-                foreach (var file in _folderInfo.GetFiles())
+                if (value != string.Empty)
                 {
-                    Files.Append( new FileDetails(file.FullName));
+                    _path = value;
+                    _folderInfo = new DirectoryInfo(_path);
+                    Files = _folderInfo.GetFiles().Select(file => new FileDetails(file.FullName));
+                }
+                else
+                {
+                    throw new ArgumentNullException(nameof(value));
                 }
             }
-            else
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
+        }
+
+        public IEnumerable<IFile> Files { get; private set; }
+
+        public FolderDetails()
+        {
+
         }
     }
 }

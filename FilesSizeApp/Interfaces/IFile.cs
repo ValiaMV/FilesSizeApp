@@ -9,6 +9,6 @@ namespace FilesSizeApp.Interfaces
     public interface IFile
     {
         string Path { get; set; }
-        long Size { get; set; }
+        Task<long> Size { get; }
     }
 }
