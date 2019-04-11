@@ -29,7 +29,7 @@ namespace FilesSizeApp.Tests
             SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
             Assert.NotNull(service);
         }
-        private void printToString(string size, string path)
+        private async Task printToString(string size, string path)
         {
             _printedData += size + " ";
         }

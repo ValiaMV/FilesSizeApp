@@ -21,23 +21,23 @@ namespace FilesSizeApp.Services
         {
             _folder.Path = path;
         }
-        public void FileSizePrint(Action<string, string> printMethod, string path)
+        public async Task FileSizePrint(Func<string, string, Task> printMethod, string path)
         {
-            printMethod.Invoke(_folder.Files.Single( file => file.Path == path).Size.ToString(), path);
+             await printMethod.Invoke( _folder.Files.SingleOrDefault( file => file.Path == path)?.Size.ToString(), path);
         }
-        public void FolderSizesPrint(Action<string, string> printMethod)
+        public async Task FolderSizesPrint(Func<string, string, Task> printMethod)
         {
-            Parallel.ForEach(_folder.Files, (currentFile) =>
+            foreach(var file in _folder.Files)
             {
-                FileSizePrint(printMethod, currentFile.Path);
-            });
+                await FileSizePrint(printMethod, file.Path);
+            }
         }
         public void MakeXml()
         {
             XmlSerializer formatter = new XmlSerializer(typeof(FileDetails[]));
             using (FileStream fs = new FileStream(_folder.Path + "//sizes.xml", FileMode.OpenOrCreate))
             {
-                    formatter.Serialize(fs, _folder.Files.Select(file => (FileDetails)file).ToArray());
+                formatter.Serialize(fs, _folder.Files.Select(file => (FileDetails)file).ToArray());
             }
         }
     }

@@ -35,31 +35,26 @@ namespace FilesSizeApp
             InitializeComponent();
         }
 
-        private void ChooseFolder(object sender, RoutedEventArgs e)
+        private async void ChooseFolder(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             var dialogResult = dialog.ShowDialog();
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
-            {
-                _viewData = new List<string>();
+            { 
                 SizesTextBox.Text = "";
-                FolderPath.Content = dialog.SelectedPath;
+                await Dispatcher.InvokeAsync(() => FolderPath.Content = dialog.SelectedPath);                
                 _sizeService.SetFolder(dialog.SelectedPath);
-                ViewData();
-                SizesTextBox.AppendText(string.Join("", _viewData.ToArray()));
+                await ViewData();                
                 _sizeService.MakeXml();
             }
         }
-        private void ViewOnTextBox(string size, string path)
+        private async Task ViewOnTextBox(string size, string path)
         {
-            lock(obj)
-            {
-                _viewData.Add(path + " " + size + " byte\n");
-            }
+            await Dispatcher.InvokeAsync(() => SizesTextBox.AppendText( path + " " + size + " byte\n"));
         }
-        private void ViewData()
+        private async Task ViewData()
         {
-            _sizeService.FolderSizesPrint(ViewOnTextBox);
+            await _sizeService.FolderSizesPrint(ViewOnTextBox);
         }
     }
 }

@@ -11,8 +11,9 @@
                Name="FolderPath"/>
         <Button Content="Choose folder" Margin="10,38,10,0" VerticalAlignment="Top"
                 Click="ChooseFolder"/>
-        <TextBox Margin="10,62,10,16" TextWrapping="Wrap" Text=""
+        <TextBox Margin="10,62,10,16" TextWrapping="Wrap"
                  VerticalScrollBarVisibility="Visible"
-                 Name="SizesTextBox"/>
+                 Name="SizesTextBox"
+                 Text="{Binding Path=ItemName, UpdateSourceTrigger=Explicit}"/>
     </Grid>
 </Window>
