@@ -21,14 +21,14 @@ namespace FilesSizeApp.Services
         }
         public async Task<long> FileSize(string path)
         {
-            return await _folder.Files.Single(file => file.Path == path).Size;
+            var size = await _folder.Files.Single(file => file.Path == path).Size;
+            return size;
         }
-        public async Task FileSizePrint(Action<long> printMethod, string path)
+        public async Task FileSizePrint(Func<Task<long>, Task> printMethod, string path)
         {
-            var size = await FileSize(path);
-            printMethod(size);
+            await printMethod(await Task.FromResult(FileSize(path)));
         }
-        public async Task FolderSizesPrint(Action<long> printMethod)
+        public async Task FolderSizesPrint(Func<Task<long>, Task> printMethod)
         {
             foreach(var file in _folder.Files)
             {

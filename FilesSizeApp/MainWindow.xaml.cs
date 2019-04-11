@@ -39,9 +39,9 @@ namespace FilesSizeApp
                 await ViewData();
             }
         }
-        private void ViewOnTextBox(long number)
+        private async Task ViewOnTextBox(Task<long> number)
         {
-            SizesTextBox.Text += number.ToString() + "\n";
+            SizesTextBox.Text += await number + "\n";
         }
         private async Task ViewData()
         {
