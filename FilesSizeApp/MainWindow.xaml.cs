@@ -40,9 +40,16 @@ namespace FilesSizeApp
             { 
                 SizesTextBox.Text = "";
                 await Dispatcher.InvokeAsync(() => FolderPath.Content = dialog.SelectedPath);                
-                _sizeService.SetFolder(dialog.SelectedPath);
-                await ViewData();                
-                _sizeService.MakeXml();
+                try
+                {
+                    _sizeService.SetFolder(dialog.SelectedPath);
+                    await ViewData();
+                    _sizeService.MakeXml();
+                }
+                catch (Exception ex)
+                {
+                    SizesTextBox.Text = ex.Message;
+                }
             }
         }
         private async Task ViewOnTextBox(string size, string path)

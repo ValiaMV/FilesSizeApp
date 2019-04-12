@@ -31,15 +31,15 @@ namespace FilesSizeApp.Tests
         }
         private async Task printToString(string size, string path)
         {
-            _printedData += size + " ";
+            await Task.Run(() => { _printedData += size + " "; }); 
         }
         [Fact]
-        public void FileSizePrintAccuracyTest()
+        public async Task FileSizePrintAccuracyTest()
         {
             _printedData = string.Empty;
             MakeTempFile();
             SizeService service = new SizeService(new FolderDetails { Path = _tempFolderPath });
-            service.FileSizePrint(printToString, _tempFilePath);
+            await service.FileSizePrint(printToString, _tempFilePath);
             FileInfo file = new FileInfo(_tempFilePath);
             Assert.Equal(file.Length.ToString(), _printedData.Trim());
         }

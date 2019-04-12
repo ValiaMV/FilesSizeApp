@@ -30,7 +30,9 @@ namespace FilesSizeApp.Services
         }
         public async Task FileSizePrint(Func<string, string, Task> printMethod, string path)
         {
-             await printMethod.Invoke( _folder.Files.SingleOrDefault( file => file.Path == path)?.Size.ToString(), path);
+            await Task.Run(() => {
+                printMethod.Invoke(_folder.Files.SingleOrDefault(file => file.Path == path)?.Size.ToString(), path);
+            }); 
         }
         /// <summary>
         /// Print files sizes from folder with specified async method

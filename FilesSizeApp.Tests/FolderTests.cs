@@ -40,7 +40,7 @@ namespace FilesSizeApp.Tests
             MakeTempFolder(filesCount);
             FolderDetails testFolder = new FolderDetails { Path = _tempFolderPath }; ;
             DirectoryInfo expectedDirectory = new DirectoryInfo(_tempFolderPath);
-            Assert.Equal(expectedDirectory.GetFiles().Select(file => file.FullName), testFolder.Files.Select(file => file.Path));
+            Assert.Equal(Directory.GetFiles(_tempFolderPath, "*.*", SearchOption.AllDirectories), testFolder.Files.Select(file => file.Path).ToArray());
         }
     }
 }

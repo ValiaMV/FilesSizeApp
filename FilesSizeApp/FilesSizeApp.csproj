@@ -101,6 +101,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="bin\Release\FilesSizeApp.exe.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -112,6 +113,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Release\FilesSizeApp.exe" />
+    <Content Include="bin\Release\FilesSizeApp.pdb" />
+    <Content Include="bin\Release\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="bin\Release\Unity.Abstractions.dll" />
+    <Content Include="bin\Release\Unity.Abstractions.pdb" />
+    <Content Include="bin\Release\Unity.Container.dll" />
+    <Content Include="bin\Release\Unity.Container.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Release\System.Runtime.CompilerServices.Unsafe.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
