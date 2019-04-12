@@ -10,8 +10,10 @@ using System.Xml.Serialization;
 
 namespace FilesSizeApp.Models
 {
+    /// <summary>
+    /// Provides properties and instances for working with file path and size 
+    /// </summary>
     [Serializable]
-
     public class FileDetails : IFile
     {
         private FileInfo _fileInfo;
@@ -32,11 +34,6 @@ namespace FilesSizeApp.Models
             {
                 throw new ArgumentNullException(nameof(path));
             }
-        }
-
-        public async Task<long> TakeSize()
-        {
-            return await Task.FromResult(_fileInfo.Length);
         }
     }
 }

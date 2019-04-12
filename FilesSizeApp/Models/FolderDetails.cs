@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace FilesSizeApp.Models
 {
+    /// <summary>
+    /// Provides properties and intances for working with folder files
+    /// </summary>
     public class FolderDetails : IFolder
     {
         private DirectoryInfo _folderInfo;

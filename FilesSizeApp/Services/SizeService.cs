@@ -10,6 +10,9 @@ using System.Xml.Serialization;
 
 namespace FilesSizeApp.Services
 {
+    /// <summary>
+    /// Service for getting files sizes from folder 
+    /// </summary>
     public class SizeService
     {
         private IFolder _folder;
@@ -17,6 +20,10 @@ namespace FilesSizeApp.Services
         {
             _folder = folder;
         }
+        /// <summary>
+        /// Set folder directory for service
+        /// </summary>
+        /// <param name="path"></param>
         public void SetFolder(string path)
         {
             _folder.Path = path;
@@ -25,6 +32,11 @@ namespace FilesSizeApp.Services
         {
              await printMethod.Invoke( _folder.Files.SingleOrDefault( file => file.Path == path)?.Size.ToString(), path);
         }
+        /// <summary>
+        /// Print files sizes from folder with specified async method
+        /// </summary>
+        /// <param name="printMethod">Async method for printing two string values</param>
+        /// <returns></returns>
         public async Task FolderSizesPrint(Func<string, string, Task> printMethod)
         {
             foreach(var file in _folder.Files)
@@ -32,6 +44,9 @@ namespace FilesSizeApp.Services
                 await FileSizePrint(printMethod, file.Path);
             }
         }
+        /// <summary>
+        /// Serializes the files objects and write XML file with names ans sizes
+        /// </summary>
         public void MakeXml()
         {
             XmlSerializer formatter = new XmlSerializer(typeof(FileDetails[]));

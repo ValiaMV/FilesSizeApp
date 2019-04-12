@@ -27,14 +27,11 @@ namespace FilesSizeApp
     public partial class MainWindow : Window
     {
         private SizeService _sizeService;
-        private List<string> _viewData;
-        private object obj = new object();
         public MainWindow(SizeService service)
         {
             _sizeService = service;
             InitializeComponent();
         }
-
         private async void ChooseFolder(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
